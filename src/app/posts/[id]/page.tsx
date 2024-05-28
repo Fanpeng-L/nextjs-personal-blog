@@ -1,13 +1,22 @@
 import HeartBtn from "@/components/HeartBtn";
+import prisma from "@/lib/db";
+import { notFound } from "next/navigation";
 
 export default async function page({ params }: { params: { id: string } }) {
-  const response = await fetch(`https://dummyjson.com/posts/${params.id}`);
-  const data = await response.json();
+  const post = await prisma.post.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <main className="text-center px-4 pt-16">
-      <h1 className="text-5xl font-bold mb-6">{data.title}</h1>
-      <p className="max-w-3xl mx-auto">{data.body}</p>
+      <h1 className="text-5xl font-bold mb-6">{post.title}</h1>
+      <p className="max-w-3xl mx-auto">{post.content}</p>
 
       <HeartBtn />
     </main>
