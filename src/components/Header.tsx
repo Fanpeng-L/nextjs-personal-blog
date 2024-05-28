@@ -14,6 +14,10 @@ const navLinks = [
     href: "/posts",
     label: "Posts",
   },
+  {
+    href: "/create-post",
+    label: "Create Post",
+  },
 ];
 
 export default function Header() {
@@ -26,7 +30,7 @@ export default function Header() {
       </Link>
 
       <nav>
-        <ul className="flex gap-6">
+        <ul className="flex gap-8">
           {navLinks.map((link) => (
             <li
               key={link.href}
